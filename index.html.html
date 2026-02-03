@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هشام العيسى | طالب نظم معلومات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A4D68;
+            --secondary: #088395;
+            --accent: #05BFDB;
+            --light: #00FFCA;
+            --bg-dark: #0d1117;
+            --bg-card: #161b22;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #f6f8fa;
+            --bg-card: #ffffff;
+            --text-primary: #24292f;
+            --text-secondary: #57606a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #1a1f2e 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        [data-theme="light"] body {
+            background: linear-gradient(135deg, #f6f8fa 0%, #e1e8ed 100%);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid rgba(5, 191, 219, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(20deg);
+            box-shadow: 0 8px 25px rgba(5, 191, 219, 0.3);
+            border-color: var(--accent);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95) rotate(0deg);
+        }
+
+        /* Animated background particles */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { opacity: 0; transform: translateY(0) translateX(0); }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) translateX(50px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 20px 60px rgba(5, 191, 219, 0.3);
+            animation: pulse 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(0, 255, 202, 0.3);
+        }
+
+        .profile-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 255, 202, 0.3);
+            animation: rotate 20s linear infinite;
+        }
+
+        .initials {
+            position: relative;
+            z-index: 2;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 0.3rem;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 202, 0.5),
+                0 0 20px rgba(5, 191, 219, 0.3),
+                2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        h1 {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+
+        .university {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-card);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(5, 191, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .university:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(5, 191, 219, 0.2);
+            border-color: var(--accent);
+        }
+
+        .sections {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid rgba(139, 148, 158, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out backwards;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent), var(--light));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(5, 191, 219, 0.2);
+            border-color: rgba(5, 191, 219, 0.3);
+        }
+
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 10px 25px rgba(5, 191, 219, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .card h2 {
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .goals-list {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .goal-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(5, 191, 219, 0.05);
+            border-radius: 12px;
+            border-right: 3px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .goal-item:hover {
+            background: rgba(5, 191, 219, 0.1);
+            transform: translateX(-5px);
+        }
+
+        .goal-icon {
+            font-size: 1.5rem;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .contact-section {
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease-out backwards;
+            animation-delay: 0.8s;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(5, 191, 219, 0.2);
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(5, 191, 219, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-link:hover::before {
+            left: 100%;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(5, 191, 219, 0.3);
+            border-color: var(--accent);
+            background: rgba(5, 191, 219, 0.05);
+        }
+
+        .contact-icon {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(139, 148, 158, 0.1);
+            color: var(--text-secondary);
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.1rem; }
+            .card { padding: 1.5rem; }
+            .profile-image { width: 140px; height: 140px; font-size: 3rem; }
+            .contact-links { flex-direction: column; align-items: stretch; }
+            .contact-link { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="تبديل الوضع الليلي والنهاري">
+        🌙
+    </button>
+    
+    <div class="bg-animation" id="particles"></div>
+    
+    <div class="container">
+        <header>
+            <div class="profile-image">
+                <span class="initials">HG</span>
+            </div>
+            <h1>هشام العيسى</h1>
+            <p class="subtitle">طالب نظم المعلومات</p>
+            <div class="university">
+                <span>🎓</span>
+                <span>جامعة الملك سعود</span>
+            </div>
+        </header>
+
+        <div class="sections">
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon">👨‍💻</div>
+                    <h2>من أنا</h2>
+                </div>
+                <div class="card-content">
+                    طالب متحمس ومتطلع في تخصص نظم المعلومات بجامعة الملك سعود. أسعى لبناء مستقبل مهني في عالم البيانات والذكاء الاصطناعي من خلال التعلم المستمر وتطوير المهارات التقنية والتحليلية.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon">📚</div>
+                    <h2>تخصصي</h2>
+                </div>
+                <div class="card-content">
+                    أدرس نظم المعلومات، وهو تخصص يجمع بين التقنية والأعمال. أتعلم كيفية تحليل البيانات، تصميم الأنظمة، وفهم كيف تساعد التكنولوجيا في حل المشاكل وتحسين الأداء في المؤسسات.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="icon">🎯</div>
+                    <h2>طموحاتي وأهدافي</h2>
+                </div>
+                <div class="goals-list">
+                    <div class="goal-item">
+                        <div class="goal-icon">🤖</div>
+                        <div>إتقان الذكاء الاصطناعي وتعلم الآلة لبناء حلول ذكية ومبتكرة</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-icon">📊</div>
+                        <div>أن أصبح عالم بيانات محترف قادر على استخلاص رؤى قيمة من البيانات</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-icon">🚀</div>
+                        <div>المساهمة في مشاريع تقنية تحدث فرقاً إيجابياً في المجتمع</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-icon">💡</div>
+                        <div>التطوير المستمر لمهاراتي ومواكبة أحدث التقنيات في المجال</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/hisham-aleissa-b9790a385" target="_blank" class="contact-link">
+                    <span class="contact-icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://x.com/hg_ksu?s=21" target="_blank" class="contact-link">
+                    <span class="contact-icon">𝕏</span>
+                    <span>Twitter</span>
+                </a>
+                <a href="mailto:hishamksu2025@gmail.com" class="contact-link">
+                    <span class="contact-icon">📧</span>
+                    <span>البريد الإلكتروني</span>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>✨ هشام العيسى - رحلة نحو المستقبل ✨</p>
+        </footer>
+    </div>
+
+    <script>
+        // Create animated particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved theme preference or default to 'dark'
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        htmlElement.setAttribute('data-theme', currentTheme);
+        themeToggle.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+
+        themeToggle.addEventListener('click', () => {
+            const theme = htmlElement.getAttribute('data-theme');
+            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            themeToggle.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        });
+    </script>
+</body>
+</html>
